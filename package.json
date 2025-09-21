@@ -1,8 +1,6 @@
 {
   "name": "mcp-quick-apply",
   "module": "index.ts",
-  "type": "module",
-  "private": true,
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
     "@tsconfig/bun": "^1.0.8",
@@ -12,7 +10,9 @@
   "peerDependencies": {
     "typescript": "^5"
   },
+  "private": true,
+  "type": "module",
   "dependencies": {
-    "commander": "^14.0.1"
+    "citty": "^0.1.6"
   }
 }
