@@ -2,3 +2,4 @@ data/*
 .serena/*
 node_modules/*
 .serena
+data
