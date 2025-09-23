@@ -19,14 +19,12 @@ function listFunc() {
   const path = require("path");
   const filePath = path.join(os.homedir(), ".mcp-manager.json");
   if (!fs.existsSync(filePath)) {
-    console.error("ファイルが存在しません");
-    return;
+    throw new Error("ファイルが存在しません");
   }
   const jsonString = fs.readFileSync(filePath, "utf8");
   const obj = JSON.parse(jsonString);
   if (!("mcpServers" in obj)) {
-    console.error("mcpServersが存在しません");
-    return;
+    throw new Error("mcpServersが存在しません");
   }
   const mcps = Object.keys(obj.mcpServers);
   Object.values(mcps).forEach((serverName) => {
