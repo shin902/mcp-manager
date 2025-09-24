@@ -1,5 +1,5 @@
 import { defineCommand } from "citty";
-import { obj } from "./import-settings";
+import { obj } from "../import-settings";
 
 export const list = defineCommand({
   meta: {
