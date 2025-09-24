@@ -1,4 +1,5 @@
 import { defineCommand } from "citty";
+import { obj } from "./import-settings";
 
 export const list = defineCommand({
   meta: {
@@ -14,15 +15,6 @@ export const list = defineCommand({
 });
 
 function listFunc() {
-  const fs = require("fs");
-  const os = require("os");
-  const path = require("path");
-  const filePath = path.join(os.homedir(), ".mcp-manager.json");
-  if (!fs.existsSync(filePath)) {
-    throw new Error("ファイルが存在しません");
-  }
-  const jsonString = fs.readFileSync(filePath, "utf8");
-  const obj = JSON.parse(jsonString);
   if (!("mcpServers" in obj)) {
     throw new Error("mcpServersが存在しません");
   }
