@@ -2,8 +2,8 @@ import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-export function importMCPManager() {
-  const filePath = join(homedir(), ".mcp-manager.json");
+export function importMCPManager(pathfromhomedir: string) {
+  const filePath = join(homedir(), pathfromhomedir);
   if (!existsSync(filePath)) {
     throw new Error("ファイルが存在しません");
   }
