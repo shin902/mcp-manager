@@ -2,12 +2,19 @@ import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-const filePath = join(homedir(), ".mcp-manager.json");
-if (!existsSync(filePath)) {
-  throw new Error("ファイルが存在しません");
+export function importMCPManager() {
+  const filePath = join(homedir(), ".mcp-manager.json");
+  if (!existsSync(filePath)) {
+    throw new Error("ファイルが存在しません");
+  }
+  const jsonString = readFileSync(filePath, "utf8");
+  const obj = JSON.parse(jsonString);
+  if (!("mcpServers" in obj)) {
+    throw new Error("mcpServersが存在しません");
+  }
+  if (typeof obj !== "object" || obj === null || Array.isArray(obj)) {
+    throw new Error("無効なJSON形式");
+  }
+
+  return obj;
 }
-const jsonString = readFileSync(filePath, "utf8");
-if (!("mcpServers" in JSON.parse(jsonString))) {
-  throw new Error("mcpServersが存在しません");
-}
-export const obj = JSON.parse(jsonString);
