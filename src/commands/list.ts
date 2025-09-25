@@ -16,9 +16,7 @@ export const list = defineCommand({
 
 function listFunc() {
   const obj = importMCPManager();
-  if (!("mcpServers" in obj)) {
-    throw new Error("mcpServersが存在しません");
-  }
+
   const mcps = Object.keys(obj.mcpServers);
   Object.values(mcps).forEach((serverName) => {
     console.log(serverName);
