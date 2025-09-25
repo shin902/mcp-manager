@@ -1,5 +1,5 @@
 import { defineCommand } from "citty";
-import { obj } from "../import-settings";
+import { importMCPManager } from "../import-settings";
 
 export const list = defineCommand({
   meta: {
@@ -15,6 +15,7 @@ export const list = defineCommand({
 });
 
 function listFunc() {
+  const obj = importMCPManager();
   if (!("mcpServers" in obj)) {
     throw new Error("mcpServersが存在しません");
   }
