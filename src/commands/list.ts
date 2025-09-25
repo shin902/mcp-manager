@@ -14,7 +14,7 @@ export const list = defineCommand({
   },
 });
 
-function listFunc(client: string) {
+function listFunc(client?: string) {
   let pathfromhomedir: string = ".mcp-manager.json";
   switch (client) {
     case "claude-code": {
