@@ -25,10 +25,14 @@ function listFunc(client?: string) {
       pathfromhomedir = ".gemini/settings.json";
       break;
     }
-    // case "claude": {
-    //   pathfromhomedir = "Library/'Application Support'/Claude";
-    //   break;
-    // }
+    case "claude": {
+      pathfromhomedir =
+        "Library/Application Support/Claude/claude_desktop_config.json";
+      break;
+    }
+    case "default": {
+      throw new Error("無効なクライアント名です");
+    }
   }
   const obj = importMCPManager(pathfromhomedir);
 
