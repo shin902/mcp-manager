@@ -7,15 +7,30 @@ export const list = defineCommand({
     description: "mcp-managerに登録してある MCP サーバーを一覧表示します",
   },
   args: {
-    // name: { type: "string", required: true },
+    client: { type: "string", required: false },
   },
   run({ args }) {
-    listFunc();
+    listFunc(args.client);
   },
 });
 
-function listFunc() {
-  const obj = importMCPManager();
+function listFunc(client?: string) {
+  let pathfromhomedir: string = ".mcp-manager.json";
+  switch (client) {
+    case "claude-code": {
+      pathfromhomedir = ".claude.json";
+      break;
+    }
+    case "gemini-cli": {
+      pathfromhomedir = ".gemini/settings.json";
+      break;
+    }
+    // case "claude": {
+    //   pathfromhomedir = "Library/'Application Support'/Claude";
+    //   break;
+    // }
+  }
+  const obj = importMCPManager(pathfromhomedir);
 
   const mcps = Object.keys(obj.mcpServers);
   Object.values(mcps).forEach((serverName) => {
