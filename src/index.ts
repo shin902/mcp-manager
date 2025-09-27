@@ -1,5 +1,6 @@
 import { defineCommand, runMain } from "citty";
 import { list } from "./commands/list";
+import { apply } from "./commands/apply";
 
 // サブコマンドの定義
 
@@ -10,6 +11,7 @@ const main = defineCommand({
   },
   subCommands: {
     list: list,
+    apply: apply,
   },
 });
 
