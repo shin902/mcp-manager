@@ -16,5 +16,5 @@ export const apply = defineCommand({
 });
 
 function applyFunc(args) {
-  console.log(args.mcp.value, args.client.value);
+  console.log(args.mcp, args.client);
 }
