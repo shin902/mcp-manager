@@ -1,5 +1,9 @@
-import { defineCommand, runMain } from "citty";
+import { Command } from "commander";
+const program = new Command();
+
 import { list } from "./commands/list";
+
+program.version("0.0.1", "-v, --version");
 
 // サブコマンドの定義
 
