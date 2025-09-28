@@ -1,20 +1,6 @@
-import { defineCommand } from "citty";
 import { importMCPManager } from "../import-settings";
 
-export const list = defineCommand({
-  meta: {
-    name: "list",
-    description: "mcp-managerに登録してある MCP サーバーを一覧表示します",
-  },
-  args: {
-    client: { type: "string", required: false },
-  },
-  run({ args }) {
-    listFunc(args.client);
-  },
-});
-
-function listFunc(client?: string) {
+export function listFunc(client?: string) {
   let pathfromhomedir: string = ".mcp-manager.json";
   switch (client) {
     case "claude-code": {
