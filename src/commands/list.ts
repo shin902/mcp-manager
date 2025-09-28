@@ -31,5 +31,4 @@ export function listFunc(client?: string) {
   Object.values(mcps).forEach((serverName) => {
     console.log(serverName);
   });
-  console.log(client);
 }
