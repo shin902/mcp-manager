@@ -16,7 +16,7 @@ export function listFunc(client?: string) {
         "Library/Application Support/Claude/claude_desktop_config.json";
       break;
     }
-    case "default": {
+    default: {
       throw new Error("無効なクライアント名です");
     }
   }
