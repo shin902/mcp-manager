@@ -29,6 +29,11 @@ export function listFunc(client?: string) {
         "Library/Application Support/Claude/claude_desktop_config.json";
       break;
     }
+    case undefined:
+    case "": {
+      // デフォルトの.mcp-manager.jsonを使用
+      break;
+    }
     default: {
       throw new Error("無効なクライアント名です");
     }
