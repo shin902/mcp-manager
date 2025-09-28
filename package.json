@@ -13,6 +13,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "citty": "^0.1.6"
+    "commander": "^14.0.1"
   }
 }

@@ -1,16 +1,29 @@
-import { defineCommand, runMain } from "citty";
-import { list } from "./commands/list";
+import { Command } from "commander";
+const program = new Command();
+import { listFunc } from "./commands/list";
 
 // サブコマンドの定義
 
-const main = defineCommand({
-  meta: {
-    name: "mcp-manager",
-    description: "mcpを各エージェントに簡単に適用するCLIツールです。",
-  },
-  subCommands: {
-    list: list,
-  },
-});
+// const main = defineCommand({
+//   meta: {
+//     name: "mcp-manager",
+//     description: "mcpを各エージェントに簡単に適用するCLIツールです。",
+//   },
+//   subCommands: {
+//     list: list,
+//   },
+// });
 
-runMain(main);
+// runMain(main);
+
+program.version("0.0.1", "-v, --version");
+
+program
+  .command("list")
+  .description("mcp-managerに登録してある MCP サーバーを一覧表示します")
+  .option("-c, --client [clientName]", "client", "クライアント名")
+  .action((options) => {
+    listFunc(options.client);
+  });
+
+program.parse();
