@@ -13,6 +13,5 @@ export function addFunc(
 		`name: ${name}\ncommand: ${command}\nargs: ${args}\nforce: ${force}\nenv: ${env}\nconfig: ${config}`,
 	);
 	const obj = importMCPSettings(config ? config : undefined);
-	obj[name] = { command: command, args: args, env: env };
-	exportMCPSettings(obj, config ? config : undefined);
+	obj.mcpServers[name] = { command: command, args: args, env: env };
 }
