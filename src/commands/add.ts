@@ -13,8 +13,8 @@ export function addFunc(
 		`name: ${name}\ncommand: ${command}\nargs: ${args}\nforce: ${force}\nenv: ${env}\nconfig: ${config}`,
 	);
 	const obj = importMCPSettings(config ? config : undefined);
-	obj.mcpServers[name] = { command: command, args: args, env: env };
 	if (force || !(name in obj.mcpServers)) {
+		obj.mcpServers[name] = { command: command, args: args, env: env };
 		exportMCPSettings(obj, config ? config : undefined);
 	} else {
 		console.log("すでに同じ名前のMCPサーバーが存在します");
