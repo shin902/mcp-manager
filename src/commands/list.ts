@@ -1,4 +1,4 @@
-import { importMCPManager } from "../import-settings";
+import { importMCPSettings } from "../import-settings";
 
 export function listFunc(client?: string) {
 	let pathfromhomedir: string = ".mcp-manager.json";
@@ -25,7 +25,7 @@ export function listFunc(client?: string) {
 			throw new Error("無効なクライアント名です");
 		}
 	}
-	const obj = importMCPManager(pathfromhomedir);
+	const obj = importMCPSettings(pathfromhomedir);
 
 	const mcps = Object.keys(obj.mcpServers);
 	Object.values(mcps).forEach((serverName) => {
