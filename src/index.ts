@@ -15,13 +15,14 @@ program
 program
 	.command("add")
 	.description("mcpサーバーをmcp-managerに登録します")
+	.option("-e, --env [key=value...]", "環境変数を設定")
+	.option("-c, --config [path...]", "設定ファイルのパス")
+	.option("-f, --force", "強制上書き")
 	.argument("<name>", "MCPサーバー名")
 	.argument("<command>", "実行コマンド")
-	.option("-e, --env [key=value...]", "環境変数を設定")
-	.option("-f, --force", "強制上書き")
-	.option("-c, --config [path...]", "設定ファイルのパス")
-	.action((name, command, options) => {
-		addFunc(name, command, options.force, options.config, options.env);
+	.argument("[args...]", "追加の引数")
+	.action((name, command, args, options) => {
+		addFunc(name, command, args, options.force, options.config, options.env);
 	});
 
 program.parse();
