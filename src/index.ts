@@ -1,5 +1,4 @@
-import { Command } from "commander";
-const program = new Command();
+import { program } from "commander";
 import { listFunc } from "./commands/list";
 import { addFunc } from "./commands/add";
 
