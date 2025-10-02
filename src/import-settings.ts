@@ -1,8 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { ConfigSchema } from "./config-schema";
-import type { Config } from "./config-schema";
+import type { Config } from "./schemas";
+import { ConfigSchema } from "./schemas";
 
 export function importMCPSettings(
   pathfromhomedir: string = ".mcp-manager.json",
