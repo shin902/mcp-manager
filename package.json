@@ -13,6 +13,7 @@
 	"private": true,
 	"type": "module",
 	"dependencies": {
-		"commander": "^14.0.1"
+		"commander": "^14.0.1",
+		"zod": "^4.1.11"
 	}
 }
