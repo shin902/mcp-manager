@@ -7,7 +7,7 @@ export function addFunc(
   args: string[],
   force?: boolean,
   config?: string,
-  env?: string[],
+  env?: Record<string, string>,
 ) {
   console.log(
     `name: ${name}\ncommand: ${command}\nargs: ${args}\nforce: ${force}\nenv: ${env}\nconfig: ${config}`,
