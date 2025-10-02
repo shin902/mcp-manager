@@ -1,6 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
+import { ConfigSchema } from "./config-schema";
+import type { Config } from "./config-schema";
 
 export function importMCPSettings(
   pathfromhomedir: string = ".mcp-manager.json",
@@ -10,12 +12,6 @@ export function importMCPSettings(
     throw new Error("ファイルが存在しません");
   }
   const jsonString = readFileSync(filePath, "utf8");
-  const obj = JSON.parse(jsonString);
-  if (!("mcpServers" in obj)) {
-    throw new Error("mcpServersが存在しません");
-  }
-  if (typeof obj !== "object" || obj === null || Array.isArray(obj)) {
-    throw new Error("無効なJSON形式");
-  }
+  const obj: Config = ConfigSchema.parse(JSON.parse(jsonString));
   return obj;
 }
