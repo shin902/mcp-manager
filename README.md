@@ -8,15 +8,16 @@ MCPサーバーを各種AIエージェントに簡単に適用するためのCLI
 
 ## 機能
 
-- MCPサーバーの一覧表示
-- MCPサーバーの管理機能（今後実装予定）
-- 各種AIエージェントへの簡単な適用（今後実装予定）
+- **MCPサーバーの一覧表示** (`list`): 設定ファイルに登録されているMCPサーバーの一覧を表示
+- **MCPサーバーの追加** (`add`): 新しいMCPサーバーを設定ファイルに追加
+- **MCPサーバーの適用** (`apply`): 指定したMCPサーバーをAIエージェントに適用（開発中）
 
 ## 技術スタック
 
 - **ランタイム**: Bun v1.x
 - **言語**: TypeScript（strict設定）
 - **CLIフレームワーク**: citty
+- **バリデーション**: Zod（型安全なスキーマバリデーション）
 - **コード品質**: Biome（リンター・フォーマッター）
 
 ## インストール
@@ -38,8 +39,41 @@ bun run src/index.ts
 ### 利用可能なコマンド
 
 #### `list` - MCPサーバーの一覧表示
+設定ファイルに登録されているMCPサーバーの一覧を表示します。
+
 ```bash
 bun run src/index.ts list
+```
+
+#### `add` - MCPサーバーの追加
+新しいMCPサーバーを設定ファイルに追加します。
+
+```bash
+bun run src/index.ts add <name> <command> [args...]
+```
+
+**オプション:**
+- `--force`: 既存の同名サーバーを上書き
+- `--config <path>`: カスタム設定ファイルのパスを指定
+- `--env <key=value>`: 環境変数を設定（複数指定可能）
+
+**例:**
+```bash
+# 基本的な追加
+bun run src/index.ts add my-server node server.js
+
+# 環境変数付きで追加
+bun run src/index.ts add my-server node server.js --env API_KEY=xxx
+
+# 既存サーバーを強制上書き
+bun run src/index.ts add my-server node server.js --force
+```
+
+#### `apply` - MCPサーバーの適用（開発中）
+指定したMCPサーバーをAIエージェントに適用します。
+
+```bash
+bun run src/index.ts apply --include <server1> <server2> --exclude <server3>
 ```
 
 ## 開発
@@ -68,9 +102,14 @@ bun test
 ```
 mcp-quick-apply/
 ├── src/
-│   ├── index.ts          # メインエントリーポイント
-│   └── commands/         # 各コマンドの実装
-│       └── list.ts       # listコマンド
+│   ├── index.ts              # メインエントリーポイント
+│   ├── schemas.ts            # Zodスキーマ定義（型安全なバリデーション）
+│   ├── import-settings.ts    # 設定ファイルの読み込み
+│   ├── export-settings.ts    # 設定ファイルの書き出し
+│   └── commands/             # 各コマンドの実装
+│       ├── list.ts           # listコマンド
+│       ├── add.ts            # addコマンド
+│       └── apply.ts          # applyコマンド（開発中）
 ├── package.json
 ├── tsconfig.json
 ├── biome.json

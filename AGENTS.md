@@ -2,13 +2,17 @@
 
 ## プロジェクト構成とモジュール配置
 - `src/index.ts` が Citty で `mcp-manager` CLI を起動します。新規サブコマンドは `subCommands` に登録し、共通ロジックは専用ヘルパーへ切り出してください。
-- `src/commands/` に各コマンドモジュールを配置し、`list.ts` のように `defineCommand` をエクスポートします。副作用を避け、テストが書きやすい純粋関数を心掛けましょう。
+- `src/commands/` に各コマンドモジュールを配置し、`list.ts`、`add.ts`、`apply.ts` のように個別ファイルで実装します。副作用を避け、テストが書きやすい純粋関数を心掛けましょう。
+- `src/schemas.ts` で Zod スキーマを定義し、型安全なバリデーションを実現しています。設定ファイルの構造変更時は必ずスキーマも更新してください。
+- `src/import-settings.ts` と `src/export-settings.ts` が設定ファイル（`~/.mcp-manager.json`）の読み書きを担当します。スキーマバリデーションを経由して型安全性を保証しています。
 - 長文ドキュメントは `docs/`、個人検証用スクリプトはコミット対象外の `*.local.ts` に置き、ユーザー固有パスは共有しないでください。
 
 ## ビルド・テスト・開発コマンド
 - `bun install`：依存関係をインストール。`bun.lock` 変更時は必ず再実行します。
 - `bun run src/index.ts --help`：CLI 配線と使用可能なサブコマンドを確認します。
 - `bun run src/index.ts list`：`~/.mcp-manager.json` 内の `mcpServers` 名を出力。設定変更前後のリグレッションチェックに利用してください。
+- `bun run src/index.ts add <name> <command> [args...]`：新しいMCPサーバーを設定ファイルに追加。`--force`、`--config`、`--env` オプションが利用可能です。
+- `bun run src/index.ts apply --include <server> --exclude <server>`：MCPサーバーをAIエージェントに適用（開発中）。
 - `bunx biome check src`：Biomelint/format。コミット前は `--write` を付けて自動修正します。
 
 ## コーディングスタイルと命名規約
@@ -27,7 +31,8 @@
 - マージ前に `bunx biome check src --write` を完了し、最新ブランチへリベースできることを確認します。
 
 ## エージェント設定のヒント
-- CLI は `~/.mcp-manager.json` の `mcpServers` マップから `{command, args}` を読み込みます。スキーマ変更時は `test.local.ts` のようなフィクスチャで検証してください。
+- CLI は `~/.mcp-manager.json` の `mcpServers` マップから `{command, args, env}` を読み込みます。スキーマ変更時は `test.local.ts` のようなフィクスチャで検証してください。
+- 設定ファイルの構造は `src/schemas.ts` で定義されており、Zod による実行時バリデーションが行われます。
 - 環境依存パスは `.gitignore` 済みのローカルファイルに留め、共有ドキュメントではプレースホルダー（例：`/path/to/...`）へ置き換えましょう。
 
 ## 出力言語ポリシー
