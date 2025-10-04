@@ -1,5 +1,6 @@
 import { exportMCPSettings } from "../export-settings";
 import { importMCPSettings } from "../import-settings";
+import type { Config } from "../schemas";
 
 export function addFunc(
   name: string,
@@ -38,7 +39,7 @@ export function addFunc(
     );
   }
 
-  const obj = importMCPSettings(config ? config : undefined);
+  const obj: Config = importMCPSettings(config ? config : undefined);
   if (force || !(name in obj.mcpServers)) {
     obj.mcpServers[name] = { command: command, args: args, env: newEnv };
     exportMCPSettings(obj, config ? config : undefined);

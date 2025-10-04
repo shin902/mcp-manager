@@ -1,10 +1,10 @@
 import { writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import type { MCPServer } from "./schemas";
+import type { Config } from "./schemas";
 
 export function exportMCPSettings(
-  obj: MCPServer,
+  obj: Config,
   pathfromhomedir: string = ".mcp-manager.json",
 ) {
   const filePath = join(homedir(), pathfromhomedir);
