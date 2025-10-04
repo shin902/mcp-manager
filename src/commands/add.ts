@@ -1,5 +1,6 @@
 import { exportMCPSettings } from "../export-settings";
 import { importMCPSettings } from "../import-settings";
+import type { Config } from "../schemas";
 
 export function addFunc(
   name: string,
@@ -25,14 +26,20 @@ export function addFunc(
     newEnv = env.reduce(
       (acc, e) => {
         const [key, value] = e.split("=");
-        acc[key] = value;
+        if (key && value) {
+          acc[key] = value;
+        } else {
+          throw new Error(
+            "envが無効な形式です。=で2つの文字列をつなげてください。",
+          );
+        }
         return acc;
       },
       {} as Record<string, string>,
     );
   }
 
-  const obj = importMCPSettings(config ? config : undefined);
+  const obj: Config = importMCPSettings(config ? config : undefined);
   if (force || !(name in obj.mcpServers)) {
     obj.mcpServers[name] = { command: command, args: args, env: newEnv };
     exportMCPSettings(obj, config ? config : undefined);
