@@ -25,7 +25,13 @@ export function addFunc(
     newEnv = env.reduce(
       (acc, e) => {
         const [key, value] = e.split("=");
-        acc[key] = value;
+        if (key && value) {
+          acc[key] = value;
+        } else {
+          throw new Error(
+            "envが無効な形式です。=で2つの文字列をつなげてください。",
+          );
+        }
         return acc;
       },
       {} as Record<string, string>,
