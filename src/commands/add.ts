@@ -15,12 +15,21 @@ export function addFunc(
 
   let newEnv = {};
 
+  /*
+  forEachの省略版みたいなやつ。要素の個数分追加処理が入る
+  acc: 現在操作しているオブジェクト、e: 現在処理している文字列
+  eに最初の文字列 string1=string2 が入る
+  それから keyとvalue を生成して、accに追加する(初期値は{})
+  */
   if (env) {
-    newEnv = env.reduce((acc, e) => {
-      const [key, value] = e.split("=");
-      acc[key] = value;
-      return acc;
-    }, {} as Record<string, string>);
+    newEnv = env.reduce(
+      (acc, e) => {
+        const [key, value] = e.split("=");
+        acc[key] = value;
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
   }
 
   const obj = importMCPSettings(config ? config : undefined);
