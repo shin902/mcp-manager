@@ -1,3 +1,6 @@
+import { homedir } from "node:os";
+import { join } from "node:path";
+
 export function getPathFromClientName(client: string = ""): string {
   let pathfromhomedir: string = ".mcp-manager.json";
   switch (client) {
@@ -23,5 +26,5 @@ export function getPathFromClientName(client: string = ""): string {
       throw new Error("無効なクライアント名です");
     }
   }
-  return pathfromhomedir;
+  return join(homedir(), pathfromhomedir);
 }

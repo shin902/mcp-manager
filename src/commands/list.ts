@@ -1,32 +1,12 @@
+import { get } from "node:http";
 import { importMCPSettings } from "../import-settings";
 import type { Config } from "../schemas";
+import { getPathFromClientName } from "../return-client-settings";
 
 export function listFunc(client?: string) {
-  let pathfromhomedir: string = ".mcp-manager.json";
-  switch (client) {
-    case "claude-code": {
-      pathfromhomedir = ".claude.json";
-      break;
-    }
-    case "gemini-cli": {
-      pathfromhomedir = ".gemini/settings.json";
-      break;
-    }
-    case "claude": {
-      pathfromhomedir =
-        "Library/Application Support/Claude/claude_desktop_config.json";
-      break;
-    }
-    case undefined:
-    case "": {
-      // デフォルトの.mcp-manager.jsonを使用
-      break;
-    }
-    default: {
-      throw new Error("無効なクライアント名です");
-    }
-  }
-  const obj: Config = importMCPSettings(pathfromhomedir);
+  const configPath = getPathFromClientName(client);
+
+  const obj: Config = importMCPSettings(configPath);
 
   const mcps = Object.keys(obj.mcpServers);
   Object.values(mcps).forEach((serverName) => {

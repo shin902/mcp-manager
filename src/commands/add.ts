@@ -1,3 +1,4 @@
+import { getPathFromClientName } from "../return-client-settings";
 import { exportMCPSettings } from "../export-settings";
 import { importMCPSettings } from "../import-settings";
 import type { Config } from "../schemas";
@@ -39,7 +40,9 @@ export function addFunc(
     );
   }
 
-  const obj: Config = importMCPSettings();
+  const filePath = getPathFromClientName(client);
+
+  const obj: Config = importMCPSettings(filePath);
   if (force || !(name in obj.mcpServers)) {
     obj.mcpServers[name] = { command: command, args: args, env: newEnv };
     exportMCPSettings(obj);
