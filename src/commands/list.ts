@@ -1,4 +1,3 @@
-import { get } from "node:http";
 import { importMCPSettings } from "../import-settings";
 import type { Config } from "../schemas";
 import { getPathFromClientName } from "../return-client-settings";
