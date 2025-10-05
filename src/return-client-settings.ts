@@ -8,11 +8,11 @@ const CLIENT_PATHS: Record<string, string> = {
     "Library/Application Support/Claude/claude_desktop_config.json",
 };
 
-const DEFAULT_PATH = ".mcp-manager.json";
+const DEFAULT_PATH = join(homedir(), ".mcp-manager.json");
 
 export function getPathFromClientName(client: string = ""): string {
   if (!client) {
-    return join(homedir(), DEFAULT_PATH);
+    return DEFAULT_PATH;
   }
 
   const path = CLIENT_PATHS[client];
