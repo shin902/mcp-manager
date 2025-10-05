@@ -16,13 +16,12 @@ program
   .command("add")
   .description("mcpサーバーをmcp-managerに登録します")
   .option("-e, --env [key=value...]", "環境変数を設定")
-  .option("-c, --config <path>", "設定ファイルのパス")
   .option("-f, --force", "強制上書き")
   .argument("<name>", "MCPサーバー名")
   .argument("<command>", "実行コマンド")
   .argument("[args...]", "追加の引数")
   .action((name, command, args, options) => {
-    addFunc(name, command, args, options.force, options.config, options.env);
+    addFunc(name, command, args, options.force, options.env);
   });
 
 program.parse();
