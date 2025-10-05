@@ -5,24 +5,24 @@ import { listFunc } from "./commands/list";
 program.version("0.0.1", "-v, --version");
 
 program
-  .command("list")
-  .description("mcp-managerに登録してある MCP サーバーを一覧表示します")
-  .option("-c, --client <clientName>", "クライアント名")
-  .action((options) => {
-    listFunc(options.client);
-  });
+	.command("list")
+	.description("mcp-managerに登録してある MCP サーバーを一覧表示します")
+	.option("-a, --apps <appName>", "アプリケーション名")
+	.action((options) => {
+		listFunc(options.apps);
+	});
 
 program
-  .command("add")
-  .description("mcpサーバーをmcp-managerに登録します")
-  .option("-e, --env [key=value...]", "環境変数を設定")
-  .option("-f, --force", "強制上書き")
-  .option("--client [clientName]", "クライアント名")
-  .argument("<name>", "MCPサーバー名")
-  .argument("<command>", "実行コマンド")
-  .argument("[args...]", "追加の引数")
-  .action((name, command, args, options) => {
-    addFunc(name, command, args, options.client, options.force, options.env);
-  });
+	.command("add")
+	.description("mcpサーバーをmcp-managerに登録します")
+	.option("-e, --env [key=value...]", "環境変数を設定")
+	.option("-f, --force", "強制上書き")
+	.option("--apps [appName]", "アプリケーション名")
+	.argument("<name>", "MCPサーバー名")
+	.argument("<command>", "実行コマンド")
+	.argument("[args...]", "追加の引数")
+	.action((name, command, args, options) => {
+		addFunc(name, command, args, options.apps, options.force, options.env);
+	});
 
 program.parse();
