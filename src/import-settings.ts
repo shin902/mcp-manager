@@ -17,5 +17,5 @@ export function importMCPSettings(
   const result = ConfigSchema.safeParse(obj);
   validateConfig(result);
 
-  return obj;
+  return result.data;
 }
