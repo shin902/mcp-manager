@@ -5,14 +5,14 @@ import { ConfigSchema, type Config } from "./schemas";
 import { validateConfig } from "./validate";
 
 export function exportMCPSettings(
-  obj: Config,
-  pathfromhomedir: string = ".mcp-manager.json",
+	obj: Config,
+	pathfromhomedir: string = ".mcp-manager.json",
 ) {
-  const result = ConfigSchema.safeParse(obj);
+	const result = ConfigSchema.safeParse(obj);
 
-  validateConfig(result);
+	validateConfig(result);
 
-  const filePath = join(homedir(), pathfromhomedir);
-  const formatterJson = JSON.stringify(result.data, null, 2);
-  writeFileSync(filePath, formatterJson);
+	const filePath = join(homedir(), pathfromhomedir);
+	const formatterJson = JSON.stringify(result.data, null, 2);
+	writeFileSync(filePath, formatterJson);
 }

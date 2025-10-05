@@ -1,14 +1,14 @@
 import { importMCPSettings } from "../import-settings";
 import type { Config } from "../schemas";
-import { getPathFromClientName } from "../return-client-settings";
+import { getPathFromAppsName } from "../return-client-settings";
 
-export function listFunc(client?: string) {
-  const configPath = getPathFromClientName(client);
+export function listFunc(apps?: string) {
+	const configPath = getPathFromAppsName(apps);
 
-  const obj: Config = importMCPSettings(configPath);
+	const obj: Config = importMCPSettings(configPath);
 
-  const mcps = Object.keys(obj.mcpServers);
-  Object.values(mcps).forEach((serverName) => {
-    console.log(serverName);
-  });
+	const mcps = Object.keys(obj.mcpServers);
+	Object.values(mcps).forEach((serverName) => {
+		console.log(serverName);
+	});
 }
