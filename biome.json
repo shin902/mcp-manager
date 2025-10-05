@@ -1,14 +1,22 @@
 {
-	"linter": {
-		"rules": {
-			"recommended": true,
-			"style": "off",
-			"correctness": {
-				"noUnusedVariables": { "level": "warn", "fix": "none" }
-			}
-		}
-	},
-	"assist": {
-		"actions": { "source": { "organizeImports": "off" } }
-	}
+  "formatter": {
+    "indentStyle": "tab"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteProperties": "asNeeded"
+    }
+  },
+  "linter": {
+    "rules": {
+      "recommended": true,
+      "style": "off",
+      "correctness": {
+        "noUnusedVariables": { "level": "warn", "fix": "none" }
+      }
+    }
+  },
+  "assist": {
+    "actions": { "source": { "organizeImports": "off" } }
+  }
 }
