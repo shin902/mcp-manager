@@ -17,11 +17,12 @@ program
   .description("mcpサーバーをmcp-managerに登録します")
   .option("-e, --env [key=value...]", "環境変数を設定")
   .option("-f, --force", "強制上書き")
+  .option("--client [clientName]", "クライアント名")
   .argument("<name>", "MCPサーバー名")
   .argument("<command>", "実行コマンド")
   .argument("[args...]", "追加の引数")
   .action((name, command, args, options) => {
-    addFunc(name, command, args, options.force, options.env);
+    addFunc(name, command, args, options.client, options.force, options.env);
   });
 
 program.parse();

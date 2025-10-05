@@ -6,11 +6,12 @@ export function addFunc(
   name: string,
   command: string,
   args: string[],
+  client?: string,
   force?: boolean,
   env?: string[],
 ) {
   console.log(
-    `name: ${name}\ncommand: ${command}\nargs: ${args}\nforce: ${force}\nenv: ${env}`,
+    `name: ${name}\ncommand: ${command}\nargs: ${args}\nclient: ${client}\nforce: ${force}\nenv: ${env}`,
   );
 
   let newEnv = {};
