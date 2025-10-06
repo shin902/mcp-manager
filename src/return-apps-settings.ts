@@ -1,7 +1,7 @@
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-const CLIENT_PATHS: Record<string, string> = {
+const APP_PATHS: Record<string, string> = {
   "claude-code": ".claude.json",
   "gemini-cli": ".gemini/settings.json",
   "claude-desktop":
@@ -10,12 +10,12 @@ const CLIENT_PATHS: Record<string, string> = {
 
 const DEFAULT_PATH = join(homedir(), ".mcp-manager.json");
 
-export function getPathFromClientName(client: string = ""): string {
-  if (!client) {
+export function getPathFromAppName(app: string = ""): string {
+  if (!app) {
     return DEFAULT_PATH;
   }
 
-  const path = CLIENT_PATHS[client];
+  const path = APP_PATHS[app];
 
   if (!path) {
     throw new Error("無効なクライアント名です");
