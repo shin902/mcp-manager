@@ -1,9 +1,9 @@
 import { importMCPSettings } from "../import-settings";
 import type { Config } from "../schemas";
-import { getPathFromClientName } from "../return-client-settings";
+import { getPathFromAppName } from "../return-apps-settings";
 
-export function listFunc(client?: string) {
-  const configPath = getPathFromClientName(client);
+export function listFunc(app?: string) {
+  const configPath = getPathFromAppName(app);
 
   const obj: Config = importMCPSettings(configPath);
 

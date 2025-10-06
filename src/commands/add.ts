@@ -1,4 +1,4 @@
-import { getPathFromClientName } from "../return-client-settings";
+import { getPathFromAppName } from "../return-apps-settings";
 import { exportMCPSettings } from "../export-settings";
 import { importMCPSettings } from "../import-settings";
 import type { Config } from "../schemas";
@@ -7,12 +7,12 @@ export function addFunc(
   name: string,
   command: string,
   args: string[],
-  client?: string,
+  app?: string,
   force?: boolean,
   env?: string[],
 ) {
   console.log(
-    `name: ${name}\ncommand: ${command}\nargs: ${args}\nclient: ${client}\nforce: ${force}\nenv: ${env}`,
+    `name: ${name}\ncommand: ${command}\nargs: ${args}\napp: ${app}\nforce: ${force}\nenv: ${env}`,
   );
 
   let newEnv = {};
@@ -40,7 +40,7 @@ export function addFunc(
     );
   }
 
-  const filePath = getPathFromClientName(client);
+  const filePath = getPathFromAppName(app);
 
   const obj: Config = importMCPSettings(filePath);
   if (force || !(name in obj.mcpServers)) {
