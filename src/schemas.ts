@@ -7,9 +7,11 @@ const MCPServerSchema = z.object({
   env: z.record(z.string(), z.string()).optional(), // オプショナル
 });
 
-export const ConfigSchema = z.object({
-  mcpServers: z.record(z.string(), MCPServerSchema), // キーは任意、値はMCPServerSchema
-});
+export const ConfigSchema = z
+  .object({
+    mcpServers: z.record(z.string(), MCPServerSchema), // キーは任意、値はMCPServerSchema
+  })
+  .passthrough();
 
 // スキーマから型を自動生成
 export type Config = z.infer<typeof ConfigSchema>;
