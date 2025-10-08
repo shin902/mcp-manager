@@ -6,7 +6,7 @@ program.version("0.0.1", "-v, --version");
 
 program
   .command("list")
-  .description("mcp-managerに登録してある MCP サーバーを一覧表示します")
+  .description("アプリに登録してある MCP サーバーを一覧表示します")
   .option("-a, --app <appName>", "アプリ名")
   .action((options) => {
     listFunc(options.app);
@@ -14,7 +14,7 @@ program
 
 program
   .command("add")
-  .description("mcpサーバーをmcp-managerに登録します")
+  .description("mcpサーバーをアプリに登録します")
   .option("-e, --env [key=value...]", "環境変数を設定")
   .option("-f, --force", "強制上書き")
   .option("--apps [appNames]", "アプリ名")
