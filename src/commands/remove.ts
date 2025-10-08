@@ -1,6 +1,8 @@
-import { getPathFromAppName } from "../return-apps-settings";
-import { exportMCPSettings } from "../export-settings";
-import { importMCPSettings } from "../import-settings";
+import {
+  importMCPSettings,
+  getPathFromAppName,
+  exportMCPSettings,
+} from "../settings";
 import type { Config } from "../schemas";
 
 export function removeFunc(server: string, app: string) {

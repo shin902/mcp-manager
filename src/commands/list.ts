@@ -1,6 +1,5 @@
-import { importMCPSettings } from "../import-settings";
+import { importMCPSettings, getPathFromAppName } from "../settings";
 import type { Config } from "../schemas";
-import { getPathFromAppName } from "../return-apps-settings";
 
 export function listFunc(app?: string) {
   const filePath = getPathFromAppName(app);
