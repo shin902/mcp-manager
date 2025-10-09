@@ -4,8 +4,13 @@ import { validateConfig } from "./validate";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { parse } from "secure-json-parse"
+import { existsSync } from "node:fs";
 
 export function importMCPSettings(filePath: string = ".mcp-manager.json") {
+    if (!existsSync(filePath)) {
+        throw new Error(`設定ファイルが見つかりません: ${filePath}`);
+    }
+
     const jsonString = readFileSync(filePath, "utf8");
     const obj = parse(jsonString, {
         protoAction: 'remove',
@@ -23,8 +28,11 @@ export function exportMCPSettings(
     filePath: string,
 ) {
     const result = ConfigSchema.safeParse(obj);
-
     validateConfig(result);
+
+    if (!existsSync(filePath)) {
+        throw new Error(`設定ファイルが見つかりません: ${filePath}`);
+    }
 
     const formatterJson = JSON.stringify(result.data, null, 2);
     writeFileSync(filePath, formatterJson);
