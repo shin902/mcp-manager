@@ -10,7 +10,7 @@ export function addFunc(
   env?: string[],
 ) {
   console.log(
-    `name: ${name}\ncommand: ${command}\nargs: ${args}\napps: ${apps}\nforce: ${force}\nenv: ${env}`,
+    `name: ${name}\ncommand: ${command}\nargs: ${args}\nforce: ${force}\nenv: ${env}`,
   );
 
   let newEnv = {};
