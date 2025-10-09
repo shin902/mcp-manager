@@ -38,10 +38,11 @@ program
 program
     .command("remove")
     .description("アプリから MCP サーバーを削除します")
-    .requiredOption("-s, --server <serverName>", "MCP サーバー名")
-    .option("-a, --apps [apps]", "アプリ名")
+    .requiredOption("-s, --servers [servers...]", "MCP サーバー名")
+    .option("-a, --app <app>", "アプリ名")
+    .option("-f --force", "強制上書き")
     .action((options) => {
-        removeFunc(options.server, options.apps);
+        removeFunc(options.servers, options.app, options.force);
     });
 
 program.parse();

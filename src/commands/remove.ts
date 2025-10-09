@@ -5,14 +5,16 @@ import {
 } from "../settings";
 import type { Config } from "../schemas";
 
-export function removeFunc(server: string, app: string) {
+export function removeFunc(servers: string[], app: string, force?: boolean) {
     const filePath = getPathFromAppName(app);
 
     const obj: Config = importMCPSettings(filePath);
-    if (server in obj.mcpServers) {
-        delete obj.mcpServers[server];
-    } else {
-        console.log(`Server ${server} not found`);
-    }
+    servers.forEach((server: string) => {
+        if (server in obj.mcpServers || force) {
+            delete obj.mcpServers[server];
+        } else {
+            console.log(`Server ${server} not found`);
+        }
+    })
     exportMCPSettings(obj, filePath);
 }
