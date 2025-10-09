@@ -1,22 +1,29 @@
 {
-  "formatter": {
-    "indentStyle": "tab"
-  },
-  "javascript": {
     "formatter": {
-      "quoteProperties": "asNeeded"
+        "indentStyle": "tab"
+    },
+    "javascript": {
+        "formatter": {
+            "quoteProperties": "asNeeded"
+        }
+    },
+    "linter": {
+        "rules": {
+            "recommended": true,
+            "style": "off",
+            "correctness": {
+                "noUnusedVariables": {
+                    "level": "warn",
+                    "fix": "none"
+                }
+            }
+        }
+    },
+    "assist": {
+        "actions": {
+            "source": {
+                "organizeImports": "off"
+            }
+        }
     }
-  },
-  "linter": {
-    "rules": {
-      "recommended": true,
-      "style": "off",
-      "correctness": {
-        "noUnusedVariables": { "level": "warn", "fix": "none" }
-      }
-    }
-  },
-  "assist": {
-    "actions": { "source": { "organizeImports": "off" } }
-  }
 }
