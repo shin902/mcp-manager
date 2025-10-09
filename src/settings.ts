@@ -20,14 +20,14 @@ export function importMCPSettings(filePath: string = ".mcp-manager.json") {
 
 export function exportMCPSettings(
     obj: Config,
-    pathfromhomedir: string = ".mcp-manager.json",
+    filePath: string,
 ) {
     const result = ConfigSchema.safeParse(obj);
 
     validateConfig(result);
 
     const formatterJson = JSON.stringify(result.data, null, 2);
-    writeFileSync(pathfromhomedir, formatterJson);
+    writeFileSync(filePath, formatterJson);
 }
 
 const APP_PATHS: Record<string, string> = {
