@@ -3,6 +3,7 @@ import { ConfigSchema, type Config } from "./schemas";
 import { validateConfig } from "./validate";
 import { homedir } from "node:os";
 import { join } from "node:path";
+import { parse } from "secure-json-parse"
 
 export function importMCPSettings(filePath: string = ".mcp-manager.json") {
     const jsonString = readFileSync(filePath, "utf8");
