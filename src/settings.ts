@@ -7,7 +7,10 @@ import { parse } from "secure-json-parse"
 
 export function importMCPSettings(filePath: string = ".mcp-manager.json") {
     const jsonString = readFileSync(filePath, "utf8");
-    const obj: Config = JSON.parse(jsonString);
+    const obj = parse(jsonString, {
+        protoAction: 'remove',
+        constructorAction: 'remove',
+    }) as Config;
 
     const result = ConfigSchema.safeParse(obj);
     validateConfig(result);
