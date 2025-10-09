@@ -1,5 +1,4 @@
-import { getPathFromAppName, exportMCPSettings } from "../settings";
-import { importMCPSettings } from "../settings";
+import { importMCPSettings, getPathFromAppName, exportMCPSettings } from "../settings";
 import type { Config } from "../schemas";
 
 export function addFunc(
