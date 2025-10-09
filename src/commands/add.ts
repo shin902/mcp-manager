@@ -6,12 +6,11 @@ export function addFunc(
   name: string,
   command: string,
   args: string[],
-  app?: string,
   force?: boolean,
   env?: string[],
 ) {
   console.log(
-    `name: ${name}\ncommand: ${command}\nargs: ${args}\napp: ${app}\nforce: ${force}\nenv: ${env}`,
+    `name: ${name}\ncommand: ${command}\nargs: ${args}\nforce: ${force}\nenv: ${env}`,
   );
 
   let newEnv = {};
@@ -39,8 +38,7 @@ export function addFunc(
     );
   }
 
-  const filePath = getPathFromAppName(app);
-
+  const filePath = getPathFromAppName();
   const obj: Config = importMCPSettings(filePath);
   if (force || !(name in obj.mcpServers)) {
     obj.mcpServers[name] = { command: command, args: args, env: newEnv };
