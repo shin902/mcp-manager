@@ -2,6 +2,7 @@ import { program } from "commander";
 import { addFunc } from "./commands/add";
 import { listFunc } from "./commands/list";
 import { removeFunc } from "./commands/remove";
+import { applyFunc } from "./commands/apply";
 
 program.version("0.0.1", "-v, --version");
 
@@ -23,6 +24,15 @@ program
   .argument("[args...]", "追加の引数")
   .action((name, command, args, options) => {
     addFunc(name, command, args, options.force, options.env);
+  });
+
+program
+  .command("apply")
+  .description("登録したMCPサーバーを対象のアプリに適用します")
+  .option("-s, --servers [servers...]", "MCPサーバー名")
+  .option("-a, --apps [apps...]", "アプリ名")
+  .action((options) => {
+    applyFunc(options.servers, options.apps);
   });
 
 program
