@@ -6,9 +6,14 @@ import { join } from "node:path";
 import { parse } from "secure-json-parse"
 import { existsSync } from "node:fs";
 
+const defaultJson = {
+    mcpServers: {}
+}
+
 export function importMCPSettings(filePath: string = ".mcp-manager.json") {
     if (!existsSync(filePath)) {
-        throw new Error(`設定ファイルが見つかりません: ${filePath}`);
+        console.log(`設定ファイルが見つかりません。新しく作成します`);
+        writeFileSync(filePath, JSON.stringify(defaultJson, null, 2), "utf-8");
     }
 
     const jsonString = readFileSync(filePath, "utf8");
