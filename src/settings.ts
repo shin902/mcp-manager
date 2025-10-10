@@ -40,15 +40,17 @@ export function importMCPSettings(filePath: string = ".mcp-manager.json") {
         writeFileSync(filePath, JSON.stringify(defaultJson, null, 2), "utf-8");
     }
 
-    //TODO: ファイルが空だったり、mcpServersのキーが存在しなかった場合
-    // safePath = validateFilePath パスが有効か検証（これは絶対有効だから上だけでいいか）
+	let obj: Config;
 
     const jsonString = readFileSync(filePath, "utf8");
-    const obj = parse(jsonString, {
-        protoAction: 'remove',
-        constructorAction: 'remove',
-    }) as Config;
-
+	if (jsonString.trim() === "") {
+		obj = defaultJson;
+	} else {
+		obj = parse(jsonString, {
+			protoAction: 'remove',
+			constructorAction: 'remove',
+		}) as Config;
+	}
     const result = ConfigSchema.safeParse(obj);
     validateConfig(result);
 
