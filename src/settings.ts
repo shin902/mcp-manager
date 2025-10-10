@@ -42,9 +42,13 @@ export function importMCPSettings(filePath: string = ".mcp-manager.json") {
 
     //TODO: ファイルが空だったり、mcpServersのキーが存在しなかった場合
     // safePath = validateFilePath パスが有効か検証（これは絶対有効だから上だけでいいか）
+	let obj: Config;
 
     const jsonString = readFileSync(filePath, "utf8");
-    const obj = parse(jsonString, {
+	if (jsonString.trim() === "") {
+		obj = defaultJson;
+	}
+    obj = parse(jsonString, {
         protoAction: 'remove',
         constructorAction: 'remove',
     }) as Config;
