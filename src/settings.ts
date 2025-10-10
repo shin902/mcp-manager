@@ -14,7 +14,7 @@ const APP_PATHS: Record<string, string> = {
         "Library/Application Support/Claude/claude_desktop_config.json",
 };
 
-const defaultJson = {
+const defaultJson: Config = {
     mcpServers: {}
 }
 
