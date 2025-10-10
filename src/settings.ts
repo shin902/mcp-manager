@@ -11,10 +11,14 @@ const defaultJson = {
 }
 
 export function importMCPSettings(filePath: string = ".mcp-manager.json") {
+    //TODO: if (!(filePath in Object.values(APP_PATHS))) {}
     if (!existsSync(filePath)) {
         console.log(`設定ファイルが見つかりません。新しく作成します`);
         writeFileSync(filePath, JSON.stringify(defaultJson, null, 2), "utf-8");
     }
+
+    //TODO: ファイルが空だったり、mcpServersのキーが存在しなかった場合
+    // safePath = validateFilePath パスが有効か検証（これは絶対有効だから上だけでいいか）
 
     const jsonString = readFileSync(filePath, "utf8");
     const obj = parse(jsonString, {
