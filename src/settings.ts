@@ -27,7 +27,7 @@ export function getPathFromAppName(app: string = ""): string {
     if (app === "") {
         appPath = DEFAULT_PATH;
     } else if (!(app in APP_PATHS) || !appPath) {
-        throw new Error("無効なクライアント名です");
+        throw new Error(`無効なクライアント名です: ${app}`);
     }
 
     const path = appPath;
@@ -36,7 +36,9 @@ export function getPathFromAppName(app: string = ""): string {
 }
 
 export function importMCPSettings(filePath: string = ".mcp-manager.json") {
-    //TODO: if (!(filePath in Object.values(APP_PATHS))) {}
+    if (!Object.values(APP_PATHS).includes(filePath)) {
+        throw new Error(`無効なクライアント名です: ${filePath}`)
+    }
     if (!existsSync(filePath)) {
         console.log(`設定ファイルが見つかりません。新しく作成します`);
         writeFileSync(filePath, JSON.stringify(defaultJson, null, 2), "utf-8");
