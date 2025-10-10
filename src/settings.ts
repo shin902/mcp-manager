@@ -7,32 +7,28 @@ import { parse } from "secure-json-parse"
 import { existsSync } from "node:fs";
 
 
-const APP_PATHS: Record<string, string> = {
-    "claude-code": ".claude.json",
-    "gemini-cli": ".gemini/settings.json",
-    "claude-desktop":
-        "Library/Application Support/Claude/claude_desktop_config.json",
-};
+const APP_PATHS = {
+    "default": join(homedir(), ".mcp-manager.json"),
+    "claude-code": join(homedir(), ".claude.json"),
+    "gemini-cli": join(homedir(), ".gemini/settings.json"),
+    "claude-desktop": join(homedir(), "Library/Application Support/Claude/claude_desktop_config.json"),
+} as const;
 
 const defaultJson: Config = {
     mcpServers: {}
-}
-
-const DEFAULT_PATH = ".mcp-manager.json";
+};
 
 
-export function getPathFromAppName(app: string = ""): string {
-    let appPath = APP_PATHS[app];
+export function getPathFromAppName(appName: string = ""): string {
+    let appFullPath: string = APP_PATHS[appName as keyof typeof APP_PATHS];
 
-    if (app === "") {
-        appPath = DEFAULT_PATH;
-    } else if (!(app in APP_PATHS) || !appPath) {
-        throw new Error(`無効なクライアント名です: ${app}`);
+    if (appName === "") {
+        appFullPath = APP_PATHS.default;
+    } else if (!(appName in APP_PATHS) || !appFullPath) {
+        throw new Error(`無効なクライアント名です: ${appName}`);
     }
 
-    const path = appPath;
-
-    return join(homedir(), path);
+    return appFullPath;
 }
 
 export function importMCPSettings(filePath: string = ".mcp-manager.json") {
