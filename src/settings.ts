@@ -5,6 +5,7 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 import { parse } from "secure-json-parse";
 import { existsSync } from "node:fs";
+import *as toml from "toml";
 
 const APP_PATHS = {
 	default: join(homedir(), ".mcp-manager.json"),
@@ -14,6 +15,7 @@ const APP_PATHS = {
 		homedir(),
 		"Library/Application Support/Claude/claude_desktop_config.json",
 	),
+	"codex-cli": join(homedir(), ".codex/config.toml"),
 } as const;
 
 const defaultJson: Config = {
@@ -41,20 +43,34 @@ export function importMCPSettings(filePath: string = ".mcp-manager.json") {
 		writeFileSync(filePath, JSON.stringify(defaultJson, null, 2), "utf-8");
 	}
 
-	let obj: Config;
+	let obj: Config = defaultJson;
+	let configString: string;
 
-	const jsonString = readFileSync(filePath, "utf8");
-	if (jsonString.trim() === "") {
-		obj = defaultJson;
+	if (filePath.endsWith(".toml")) {
+		configString = readFileSync(filePath, "utf-8");
+		obj = toml.parse(configString) as Config;
 	} else {
-		obj = parse(jsonString, {
+		configString = readFileSync(filePath, "utf8");
+	}
+
+
+	if (configString.trim() === "") {
+		obj = defaultJson;
+
+	} else if (filePath.endsWith(".toml")) {
+		configString = readFileSync(filePath, "utf8");
+		const oldObj = toml.parse(configString);
+		const mcps = oldObj.mcp_servers ?? {};
+		obj.mcpServers = mcps;
+	} else {
+		configString = readFileSync(filePath, "utf8");
+		obj = parse(configString, {
 			protoAction: "remove",
 			constructorAction: "remove",
 		}) as Config;
 	}
 	const result = ConfigSchema.safeParse(obj);
 	validateConfig(result);
-
 	return result.data;
 }
 
