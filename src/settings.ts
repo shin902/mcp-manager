@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { ConfigSchema, type Config, type MCPServer } from "./schemas";
+import { ConfigSchema, type Config } from "./schemas";
 import { validateConfig } from "./validate";
 import { homedir } from "node:os";
 import { join } from "node:path";
