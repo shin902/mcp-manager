@@ -43,7 +43,7 @@ export function importMCPSettings(filePath: string = ".mcp-manager.json") {
 		writeFileSync(filePath, JSON.stringify(defaultJson, null, 2), "utf-8");
 	}
 
-	let obj: Config;
+	let obj: Config = defaultJson;
 	let configString: string;
 
 	if (filePath.endsWith(".toml")) {
@@ -56,24 +56,22 @@ export function importMCPSettings(filePath: string = ".mcp-manager.json") {
 
 	if (configString.trim() === "") {
 		obj = defaultJson;
-		return obj;
+
 	} else if (filePath.endsWith(".toml")) {
 		configString = readFileSync(filePath, "utf8");
 		const oldObj = toml.parse(configString);
 		const mcps = oldObj.mcp_servers ?? {};
 		obj.mcpServers = mcps;
-		console.log(JSON.stringify(obj, null, 2));
-		return obj;
 	} else {
 		configString = readFileSync(filePath, "utf8");
 		obj = parse(configString, {
 			protoAction: "remove",
 			constructorAction: "remove",
 		}) as Config;
-		const result = ConfigSchema.safeParse(obj);
-		validateConfig(result);
-		return result.data;
 	}
+	const result = ConfigSchema.safeParse(obj);
+	validateConfig(result);
+	return result.data;
 }
 
 export function exportMCPSettings(obj: Config, filePath: string) {
