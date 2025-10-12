@@ -15,6 +15,7 @@
     "dependencies": {
         "commander": "^14.0.1",
         "secure-json-parse": "^4.1.0",
+        "toml": "^3.0.0",
         "zod": "^4.1.11"
     }
 }
