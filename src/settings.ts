@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { ConfigSchema, type Config } from "./schemas";
+import { ConfigSchema, type Config, type MCPServer } from "./schemas";
 import { validateConfig } from "./validate";
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -25,6 +25,38 @@ const defaultToml = `
 [mcp_servers]
 `;
 
+function loadConfig(filePath: string): Config {
+	let configString: string;
+	let obj: Config = defaultJson;
+	// json
+	if (filePath.endsWith(".json")) {
+		if (!existsSync(filePath)) {
+			console.log(`設定ファイルが見つかりません。新しく作成します`);
+			writeFileSync(filePath, JSON.stringify(defaultJson, null, 2), "utf-8");
+		}
+		configString = readFileSync(filePath, "utf-8");
+		if (configString.trim() === "") {
+			obj.mcpServers = {};
+		}
+		obj = parse(configString, {
+			protoAction: "remove",
+			constructorAction: "remove",
+		}) as Config;
+
+		// toml
+	} else if (filePath.endsWith(".toml")) {
+		if (!existsSync(filePath)) {
+			writeFileSync(filePath, defaultToml, "utf-8");
+		}
+		configString = readFileSync(filePath, "utf-8");
+		const parsedToml = toml.parse(configString) as {
+			mcp_servers?: Record<string, MCPServer>;
+		};
+		obj.mcpServers = parsedToml.mcp_servers ?? defaultJson.mcpServers;
+	}
+	return obj;
+}
+
 export function getPathFromAppName(appName: string = ""): string {
 	let appFullPath: string = APP_PATHS[appName as keyof typeof APP_PATHS];
 
@@ -43,37 +75,9 @@ export function importMCPSettings(filePath: string = ".mcp-manager.json") {
 	}
 
 	let obj: Config = defaultJson;
-	let configString: string;
 
-	if (filePath.endsWith(".toml")) {
-		if (!existsSync(filePath)) {
-			console.log(`設定ファイルが見つかりません。新しく作成します`);
-			writeFileSync(filePath, defaultToml, "utf-8");
-		}
-		configString = readFileSync(filePath, "utf-8");
-		obj = toml.parse(configString) as Config;
-	} else {
-		if (!existsSync(filePath)) {
-			console.log(`設定ファイルが見つかりません。新しく作成します`);
-			writeFileSync(filePath, JSON.stringify(defaultJson, null, 2), "utf-8");
-		}
-		configString = readFileSync(filePath, "utf8");
-	}
+	loadConfig(filePath);
 
-	if (configString.trim() === "") {
-		obj = defaultJson;
-	} else if (filePath.endsWith(".toml")) {
-		configString = readFileSync(filePath, "utf8");
-		const oldObj = toml.parse(configString);
-		const mcps = oldObj.mcp_servers ?? {};
-		obj.mcpServers = mcps;
-	} else {
-		configString = readFileSync(filePath, "utf8");
-		obj = parse(configString, {
-			protoAction: "remove",
-			constructorAction: "remove",
-		}) as Config;
-	}
 	const result = ConfigSchema.safeParse(obj);
 	validateConfig(result);
 	return result.data;
