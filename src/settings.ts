@@ -5,7 +5,7 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 import { parse } from "secure-json-parse";
 import { existsSync } from "node:fs";
-import *as toml from "toml";
+import * as toml from "toml";
 
 const APP_PATHS = {
 	default: join(homedir(), ".mcp-manager.json"),
@@ -21,6 +21,9 @@ const APP_PATHS = {
 const defaultJson: Config = {
 	mcpServers: {},
 };
+const defaultToml = `
+[mcp_servers]
+`;
 
 export function getPathFromAppName(appName: string = ""): string {
 	let appFullPath: string = APP_PATHS[appName as keyof typeof APP_PATHS];
@@ -38,25 +41,27 @@ export function importMCPSettings(filePath: string = ".mcp-manager.json") {
 	if (!Object.values(APP_PATHS).includes(filePath)) {
 		throw new Error(`無効なクライアント名です: ${filePath}`);
 	}
-	if (!existsSync(filePath)) {
-		console.log(`設定ファイルが見つかりません。新しく作成します`);
-		writeFileSync(filePath, JSON.stringify(defaultJson, null, 2), "utf-8");
-	}
 
 	let obj: Config = defaultJson;
 	let configString: string;
 
 	if (filePath.endsWith(".toml")) {
+		if (!existsSync(filePath)) {
+			console.log(`設定ファイルが見つかりません。新しく作成します`);
+			writeFileSync(filePath, defaultToml, "utf-8");
+		}
 		configString = readFileSync(filePath, "utf-8");
 		obj = toml.parse(configString) as Config;
 	} else {
+		if (!existsSync(filePath)) {
+			console.log(`設定ファイルが見つかりません。新しく作成します`);
+			writeFileSync(filePath, JSON.stringify(defaultJson, null, 2), "utf-8");
+		}
 		configString = readFileSync(filePath, "utf8");
 	}
 
-
 	if (configString.trim() === "") {
 		obj = defaultJson;
-
 	} else if (filePath.endsWith(".toml")) {
 		configString = readFileSync(filePath, "utf8");
 		const oldObj = toml.parse(configString);
