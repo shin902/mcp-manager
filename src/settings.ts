@@ -74,9 +74,7 @@ export function importMCPSettings(filePath: string = ".mcp-manager.json") {
 		throw new Error(`無効なクライアント名です: ${filePath}`);
 	}
 
-	let obj: Config = defaultJson;
-
-	loadConfig(filePath);
+	let obj: Config = loadConfig(filePath);
 
 	const result = ConfigSchema.safeParse(obj);
 	validateConfig(result);
