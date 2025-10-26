@@ -43,7 +43,7 @@ function loadConfig(filePath: string): Config {
 			constructorAction: "remove",
 		}) as Config;
 
-		// toml
+	// toml
 	} else if (filePath.endsWith(".toml")) {
 		if (!existsSync(filePath)) {
 			writeFileSync(filePath, defaultToml, "utf-8");
