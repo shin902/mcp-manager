@@ -21,7 +21,7 @@ const APP_PATHS = {
 const defaultJson: Config = {
 	mcpServers: {},
 };
-const defaultToml = `
+const defaultToml: string = `
 [mcp_servers]
 `;
 
